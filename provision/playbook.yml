@@ -3,7 +3,7 @@
   connection: local
   sudo: yes
   vars_files:
-    - /vars/config.yml
+    - /vagrant/vars/config.yml
 
   roles:
     - { role: openconnect, vpn_url: "{{ server }}", vpn_user: "{{ user }}", vpn_password: "{{ password }}" }
