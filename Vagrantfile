@@ -50,7 +50,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ericmann/trusty64"
 
   # Default Hostname
-  config.vm.hostname = "amcns"
+  config.vm.hostname = "openconnect"
 
   # Forward Agent
   #
