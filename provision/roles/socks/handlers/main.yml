@@ -1,0 +1,4 @@
+---
+# handlers file for socks
+- name: restart socks
+  service: name=socks state=restarted
