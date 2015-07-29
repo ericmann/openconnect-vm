@@ -1,0 +1,13 @@
+# socks - SOCKS server access daemon
+#
+# This service setups a SOCKS server connection to a specified server
+#
+
+start on runlevel [0123456]
+
+stop on runlevel [!$RUNLEVEL]
+
+respwan
+respawn limit 15 5
+expect fork
+exec ssh -v -f -N -D 0.0.0.0:1080 localhost >/tmp/log.log 2>&1

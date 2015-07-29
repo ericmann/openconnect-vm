@@ -1,0 +1,7 @@
+---
+# tasks file for socks daemon
+
+- name: Configure SOCKS5 Daemon
+  template: dest=/etc/init/socks.conf src=socks.conf.j2
+  notify:
+    - restart socks
