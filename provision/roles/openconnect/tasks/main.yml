@@ -15,3 +15,6 @@
   template: dest=/etc/init/openconnect.conf src=openconnect.conf.j2
   notify:
     - restart openconnect
+
+- name: Configure VPN cron restart
+  template: dest=/etc/cron.hourly/openconnect.sh src=openconnect.sh.j2 mode="u+rx"

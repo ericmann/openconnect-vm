@@ -3,11 +3,11 @@
 # This service setups a SOCKS server connection to a specified server
 #
 
-start on runlevel [0123456]
+start on runlevel [2345]
 
-stop on runlevel [!$RUNLEVEL]
+stop on runlevel [!2345]
 
-respwan
+respawn
 respawn limit 15 5
 expect fork
 exec ssh -v -f -N -D 0.0.0.0:1080 localhost >/tmp/log.log 2>&1

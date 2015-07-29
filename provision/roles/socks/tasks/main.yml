@@ -1,6 +1,12 @@
 ---
 # tasks file for socks daemon
 
+- name: Generate an SSH Key for the Vagrant user
+  user: name=vagrant generate_ssh_key=yes ssh_key_bits=2048 ssh_key_file=.ssh/id_rsa
+
+- name: Append the SSH Key to Authorized list
+  authorized_key: user=vagrant key={{ lookup('file', '/home/vagrant/.ssh/id_rsa.pub') }}"
+
 - name: Configure SOCKS5 Daemon
   template: dest=/etc/init/socks.conf src=socks.conf.j2
   notify:
