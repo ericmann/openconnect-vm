@@ -13,6 +13,14 @@ Next, run `vagrant up` to build and configure the VM.
 SOCKS Proxy
 -----------
 
+The server will be automatically set up to act as a SOCKS5 proxy - you can route all web, SSH, and other traffic through the server to the configured VPN.
+
+The proxy is listening on port `1080`.
+
+Under VirtualBox, the server will automatically start with a local IP of `192.168.90.10` (use this when configuring proxied applications).
+
+Under Hyper-V, you will need to identify the dynamically-provisioned IP address after boot, but can likely use the `openconnect` host alias during configuration.
+
 Frequently Asked Questions
 --------------------------
 
