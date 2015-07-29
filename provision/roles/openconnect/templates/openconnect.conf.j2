@@ -16,6 +16,6 @@ exec cat /etc/openconnect/network.passwd | openconnect \
   --syslog \
   --no-dtls \
   --script /etc/vpnc/vpnc-script \
-  --user {{ vpn_user }}
+  --user {{ vpn_user }} \
   --usergroup {{ vpn_group }}
 
