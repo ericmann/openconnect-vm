@@ -4,4 +4,4 @@
   sudo: yes
 
   roles:
-    - webami
+    - { role: openconnect, vpn_url: "https://server.com", vpn_user: "user", vpn_password: "pass" }

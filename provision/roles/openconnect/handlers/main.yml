@@ -1,0 +1,4 @@
+---
+# handlers file for openconnect
+- name: restart openconnect
+  service: name=openconnect state=restarted

@@ -1,0 +1,17 @@
+---
+# tasks file for openconnect
+
+- name: Install packages.
+  apt: update_cache=true name="{{ item }}"
+  with_items: packages
+
+- name: Configure openconnect etc directory
+  file: path=/etc/openconnect state=directory mode=0700
+
+- name: Configure VPN password
+  copy: content="{{ vpn_password }}" dest=/etc/openconnect/network.passwd mode=0600
+
+- name: Configure VPN connection
+  template: dest=/etc/init/openconnect.conf src=openconnect.conf.j2
+  notify:
+    - restart openconnect

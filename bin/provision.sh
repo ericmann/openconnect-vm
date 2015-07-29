@@ -3,18 +3,16 @@ cat << "ARTWORK"
 ARTWORK
 
 echo
-echo "Updating YUM sources."
+echo "Updating APT sources."
 echo
-yum update > /dev/null
+apt-get update > /dev/null
 echo
 echo "Installing Ansible."
 echo
-#yum -y install software-properties-common
-#add-apt-repository -y ppa:ansible/ansible
-wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-yum -y install epel-release-6-8.noarch.rpm
-yum update
-yum -y install ansible
+apt-get -y install software-properties-common
+add-apt-repository -y ppa:ansible/ansible
+apt-get update
+apt-get -y install ansible
 ansible_version=`dpkg -s ansible 2>&1 | grep Version | cut -f2 -d' '`
 echo
 echo "Installed Ansible $ansible_version"

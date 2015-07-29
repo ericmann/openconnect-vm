@@ -30,9 +30,6 @@ Vagrant.configure("2") do |config|
     # If you are running more than one VM through VirtualBox, different subnets should be used
     # for those as well. This includes other Vagrant boxes.
     override.vm.network :private_network, ip: "192.168.90.10"
-
-    # VirtualBox CentOS Box
-    override.vm.box = "chef/centos-6.6"
   end
 
   # Custom details for Hyper-V if using it as a provider
@@ -47,10 +44,10 @@ Vagrant.configure("2") do |config|
     # Hyper-V uses DHCP to assign IP addresses, but if we don't configure the network to be "private",
     # then we can't interact with it programmatically.
     override.vm.network :private_network
-
-    # Hyper-V CentOS Box
-    override.vm.box = "pyranja/centos-6"
   end
+
+  # Default Ubuntu Box
+  config.vm.box = "ericmann/trusty64"
 
   # Default Hostname
   config.vm.hostname = "amcns"
@@ -62,10 +59,10 @@ Vagrant.configure("2") do |config|
   config.ssh.forward_agent = true
 
   # To avoid stdin/tty issues
-  #config.vm.provision "fix-no-tty", type: "shell" do |s|
-  #  s.privileged = false
-  #  s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
-  #end
+  config.vm.provision "fix-no-tty", type: "shell" do |s|
+    s.privileged = false
+    s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
+  end
 
   # Ansible Provisioning
   #
