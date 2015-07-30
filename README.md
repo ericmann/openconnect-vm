@@ -21,10 +21,54 @@ Under VirtualBox, the server will automatically start with a local IP of `192.16
 
 Under Hyper-V, you will need to identify the dynamically-provisioned IP address after boot, but can likely use the `openconnect` host alias during configuration.
 
+### Browser Configuration
+
+Various browsers work a bit differently with SOCKS proxies.
+
+#### Firefox
+
+Firefox is relatively straight-forward. In the Advanced section of the settings screen, you can configure network settings. Add a SOCKS5 proxy pointing to `openconnect` on port `1080`. Don't forget to add `openconnect` itself to the "no proxy" list or Firefox will try to grab the DNS entries for your proxy server from the proxy itself and end up in an infinite loop!
+
+![Firefox configuration](https://s3.amazonaws.com/uploads.hipchat.com/52421/365110/YbBNENfUGjXl60L/upload.png)
+
+#### Safari
+
+Thankfully, Safari's proxy configuration is somewhat similar to Firefox's. Just set the proxy settings in the network configuration.
+
+#### Chrome
+
+
+
+### Shell Configuration
+
+If you need to use Git or other shell-based tools over the SOCKS proxy, you can configure SSH to use SOCKS through its 
+ configuration file (`~/.ssh/config`):
+
+```sh
+Host {{VPN-protected server}
+        ProxyCommand=nc -X 5 -x openconnect:1080 %h %p
+```
+
+### Utility
+
+For convenience, those of you using a Bash-type shell can add a script to your bash profile for remotely turning the SOCKS proxy on and off from anywhere on your system:
+
+```sh
+cntrlVPN() {
+        current=$PWD
+        cd {{ location where you cloned openconnect-vm }}
+        vagrant $1
+        cd $current
+}
+alias vpn=cntrlVPN
+```
+
+Now, you can type `vpn up` and `vpn halt` from any location in a terminal to activate/deactivate the SOCKS proxy at will.
+
 Frequently Asked Questions
 --------------------------
 
-### How do I change my VPN username?
+### My password was changed for the VPN, how do I let the VM know?
 
 Just update the values in `/vars/config.yml` and re-run `vagrant up`. This will both update machine and reset any configuration values necessary.
 
