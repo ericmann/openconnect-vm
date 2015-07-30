@@ -37,7 +37,30 @@ Thankfully, Safari's proxy configuration is somewhat similar to Firefox's. Just 
 
 #### Chrome
 
+Chrome can be a bit tricky; particularly on Windows where it uses _system-level_ proxy configuration by default. Instead of editing network configuration within the application, you must launch Chrome with a set of command-line flags that will then start it up using the proxy instead of the defaults.
 
+On Bash-type shell systems, you can add the following script to your bash profile to launch and relaunch Chrome automatically:
+
+```sh
+proxyChrome() {
+	if [ "$1" = "proxyon" ] then
+		local chrmproxy="--proxy-server=\"socks=openconnect:1080\" --proxy-bypass-list=\"openconnect,*.google.com;*zoom.us;*php.net;localhost;127.0.0.1\""
+	elif [ "$1" = "proxyoff" ] then
+		local chrmproxy="--no-proxy-server"
+	else
+		local chrmproxy=""
+	fi
+
+	if [ ! -z "$chrmproxy" ] then
+		if pgrep "Google Chrome" > /dev/null then
+			killall "Google Chrome"
+			local chrmproxy="$chrmproxy --restore-last-session"
+			sleep 1
+		fi
+		open -g -a "Google Chrome" --args ${chrmproxy}
+	fi
+}
+```
 
 ### Shell Configuration
 
@@ -46,7 +69,7 @@ If you need to use Git or other shell-based tools over the SOCKS proxy, you can 
 
 ```sh
 Host {{VPN-protected server}
-        ProxyCommand=nc -X 5 -x openconnect:1080 %h %p
+	ProxyCommand=nc -X 5 -x openconnect:1080 %h %p
 ```
 
 ### Utility
@@ -55,15 +78,25 @@ For convenience, those of you using a Bash-type shell can add a script to your b
 
 ```sh
 cntrlVPN() {
-        current=$PWD
-        cd {{ location where you cloned openconnect-vm }}
-        vagrant $1
-        cd $current
+	current=$PWD
+	cd {{ location where you cloned openconnect-vm }}
+	vagrant $1
+	cd $current
 }
 alias vpn=cntrlVPN
 ```
 
 Now, you can type `vpn up` and `vpn halt` from any location in a terminal to activate/deactivate the SOCKS proxy at will.
+
+If you're also using the Chrome proxy script above, you can add the following between the `vagrant $1` and `cd $current` lines to automatically restart Chrome with or without proxy support when you bring the proxy up and down:
+
+```sh
+if [ "$1" = "up" ] || [ "$1" = "reload" ] then
+	proxyChrome proxyon
+elif [ "$1" = "halt" ] || [ "$1" = "suspend" ] || [ "$1" = "destroy" ] then
+	proxyChrome proxyoff
+fi
+```
 
 Frequently Asked Questions
 --------------------------
