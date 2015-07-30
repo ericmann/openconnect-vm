@@ -68,7 +68,7 @@ If you need to use Git or other shell-based tools over the SOCKS proxy, you can 
  configuration file (`~/.ssh/config`):
 
 ```sh
-Host {{VPN-protected server}
+Host {{ VPN-protected server }}
 	ProxyCommand=nc -X 5 -x openconnect:1080 %h %p
 ```
 
@@ -109,3 +109,5 @@ Credits
 -------
 
 The Ansible provisioning [was originally built by Crown Copyright (Government Digital Service)](https://github.com/alphagov/ansible-role-openconnect)
+
+Special thanks to [Luke Woodward](https://github.com/lkwdwrd) for testing support and Bash alias/functions!
