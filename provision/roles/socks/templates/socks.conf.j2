@@ -9,5 +9,4 @@ stop on runlevel [!2345]
 
 respawn
 respawn limit 15 5
-expect fork
 exec ssh -v -o StrictHostKeyChecking=no -i /home/vagrant/.ssh/id_rsa -N -D 0.0.0.0:1080 vagrant@localhost >/tmp/log.log 2>&1
