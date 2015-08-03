@@ -67,7 +67,7 @@ proxyChrome() {
 If you need to use Git or other shell-based tools over the SOCKS proxy, you can configure SSH to use SOCKS through its 
  configuration file (`~/.ssh/config`).
  
-#### On *NIX
+#### *Nix
 
 On a Mac or Linux installation, we can use netcat to pass data through to the VPN.
 
@@ -85,7 +85,29 @@ Host {{ VPN-protected server }}
 	ProxyCommand connect -S openconnect:1080 %h %p
 ```	
 
-### Utility
+### Other Tools
+
+Some other command-line tools (like NPM and Composer) will thankfully respect the `HTTP_PROXY` environment variables. If you need to use these tools over the proxy, be sure to set the environment variable as necessary.
+
+#### *Nix
+
+Export the `HTTP_PROXY` and `HTTPS_PROXY` environment variables on the active terminal:
+
+```sh
+$ export HTTP_PROXY=socks5://openconnect:1080
+$ export HTTP_PROXY=socks5://openconnect:1080
+```
+
+#### Windows
+
+Windows exports environment variables slightly differently, using `SET` instead of `export`:
+
+```sh
+> SET HTTP_PROXY=socks5://openconnect:1080
+> SET HTTP_PROXY=socks5://openconnect:1080
+```
+
+### Utilities
 
 For convenience, those of you using a Bash-type shell can add a script to your bash profile for remotely turning the SOCKS proxy on and off from anywhere on your system:
 
