@@ -39,28 +39,34 @@ Thankfully, Safari's proxy configuration is somewhat similar to Firefox's. Just 
 
 Chrome can be a bit tricky; particularly on Windows where it uses _system-level_ proxy configuration by default. Instead of editing network configuration within the application, you must launch Chrome with a set of command-line flags that will then start it up using the proxy instead of the defaults.
 
-On Bash-type shell systems, you can add the following script to your bash profile to launch and relaunch Chrome automatically:
+On Mac OS you can add the following script to your `~/.bash_profile` to launch or relaunch Chrome automatically:
 
 ```sh
 proxyChrome() {
-	if [ "$1" = "proxyon" ] then
-		local chrmproxy="--proxy-server=\"socks=openconnect:1080\" --proxy-bypass-list=\"openconnect,*.google.com;*zoom.us;*php.net;localhost;127.0.0.1\""
-	elif [ "$1" = "proxyoff" ] then
-		local chrmproxy="--no-proxy-server"
-	else
-		local chrmproxy=""
+	local proxy=("open" "-a" "\"Google Chrome\"" "--args");
+	if [ "$1" = "proxyon" ]
+		then
+		proxy+=("--proxy-server=\"socks5://openconnect\"")
+		proxy+=("--proxy-bypass-list=\"openconnect;*.google.com;*twitter.com;*facebook.com;localhost;127.0.0.1\"")
+	elif [ "$1" = "proxyoff" ]
+		then
+		proxy+=("--no-proxy-server")
 	fi
 
-	if [ ! -z "$chrmproxy" ] then
-		if pgrep "Google Chrome" > /dev/null then
+	if [ ! -z "{$proxy[@]}" ]
+		then
+		if pgrep "Google Chrome" > /dev/null
+			then
 			killall "Google Chrome"
-			local chrmproxy="$chrmproxy --restore-last-session"
+			proxy+=("--restore-last-session")
 			sleep 1
 		fi
-		open -g -a "Google Chrome" --args ${chrmproxy}
+		eval "${proxy[@]}"
 	fi
 }
 ```
+
+A similar script could likely be achieved on any bash-style system, but the `open` command is only available in Mac OS.
 
 ### Shell Configuration
 
@@ -113,7 +119,7 @@ For convenience, those of you using a Bash-type shell can add a script to your b
 
 ```sh
 cntrlVPN() {
-	current=$PWD
+	local current=$PWD
 	cd {{ location where you cloned openconnect-vm }}
 	vagrant $1
 	cd $current
@@ -126,9 +132,11 @@ Now, you can type `vpn up` and `vpn halt` from any location in a terminal to act
 If you're also using the Chrome proxy script above, you can add the following between the `vagrant $1` and `cd $current` lines to automatically restart Chrome with or without proxy support when you bring the proxy up and down:
 
 ```sh
-if [ "$1" = "up" ] || [ "$1" = "reload" ] then
+if [ "$1" = "up" ] || [ "$1" = "reload" ]
+	then
 	proxyChrome proxyon
-elif [ "$1" = "halt" ] || [ "$1" = "suspend" ] || [ "$1" = "destroy" ] then
+elif [ "$1" = "halt" ] || [ "$1" = "suspend" ] || [ "$1" = "destroy" ]
+	then
 	proxyChrome proxyoff
 fi
 ```
