@@ -10,12 +10,14 @@ Create a `config.yml` file in the `/vars` directory with your server address, us
 
 Next, run `vagrant up` to build and configure the VM.
 
-SOCKS Proxy
+Proxy
 -----------
 
-The server will be automatically set up to act as a SOCKS5 proxy - you can route all web, SSH, and other traffic through the server to the configured VPN.
+The server will be automatically set up to act as both a SOCKS5 and an HTTP proxy - you can route all web, SSH, and other traffic through the server to the configured VPN.
 
-The proxy is listening on port `1080`.
+The SOCKS proxy is listening on port `1080`.
+
+The HTTP proxy is listening on port `2080`.
 
 Under VirtualBox, the server will automatically start with a local IP of `192.168.90.10` (use this when configuring proxied applications).
 
@@ -100,8 +102,8 @@ Some other command-line tools (like NPM and Composer) will thankfully respect th
 Export the `HTTP_PROXY` and `HTTPS_PROXY` environment variables on the active terminal:
 
 ```sh
-$ export HTTP_PROXY=socks5://openconnect:1080
-$ export HTTP_PROXY=socks5://openconnect:1080
+$ export HTTP_PROXY=http://openconnect:2080
+$ export HTTP_PROXY=http://openconnect:2080
 ```
 
 #### Windows
@@ -109,8 +111,8 @@ $ export HTTP_PROXY=socks5://openconnect:1080
 Windows exports environment variables slightly differently, using `SET` instead of `export`:
 
 ```sh
-> SET HTTP_PROXY=socks5://openconnect:1080
-> SET HTTP_PROXY=socks5://openconnect:1080
+> SET HTTP_PROXY=http://openconnect:2080
+> SET HTTP_PROXY=http://openconnect:2080
 ```
 
 ### Utilities
