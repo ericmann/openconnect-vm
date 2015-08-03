@@ -7,4 +7,5 @@
 
   roles:
     - socks
+    - tinyproxy
     - { role: openconnect, vpn_url: "{{ server }}", vpn_user: "{{ user }}", vpn_password: "{{ password }}", vpn_group: "{{ group }}" }
