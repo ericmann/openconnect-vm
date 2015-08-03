@@ -1,0 +1,4 @@
+---
+# handlers file for socks
+- name: restart tinyproxy
+  service: name=tinyproxy state=restarted
