@@ -65,12 +65,25 @@ proxyChrome() {
 ### Shell Configuration
 
 If you need to use Git or other shell-based tools over the SOCKS proxy, you can configure SSH to use SOCKS through its 
- configuration file (`~/.ssh/config`):
+ configuration file (`~/.ssh/config`).
+ 
+#### On *NIX
+
+On a Mac or Linux installation, we can use netcat to pass data through to the VPN.
 
 ```sh
 Host {{ VPN-protected server }}
-	ProxyCommand=nc -X 5 -x openconnect:1080 %h %p
+	ProxyCommand nc -X 5 -x openconnect:1080 %h %p
 ```
+
+#### Windows
+
+Windows obviously doesn't have the same tools as Linux systems. However, if you installed Git from [the standard packages](https://git-scm.com/downloads) and added Git and its tools to the system path, you have access to [some alternative tools](http://ttmm.io/tech/linux-flavored-windows/) that will provide the same functionality:
+
+```sh
+Host {{ VPN-protected server }}
+	ProxyCommand connect -S openconnect:1080 %h %p
+```	
 
 ### Utility
 
