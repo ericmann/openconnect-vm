@@ -103,7 +103,7 @@ Export the `HTTP_PROXY` and `HTTPS_PROXY` environment variables on the active te
 
 ```sh
 $ export HTTP_PROXY=http://openconnect:2080
-$ export HTTP_PROXY=http://openconnect:2080
+$ export HTTPS_PROXY=http://openconnect:2080
 ```
 
 #### Windows
@@ -112,7 +112,7 @@ Windows exports environment variables slightly differently, using `SET` instead 
 
 ```sh
 > SET HTTP_PROXY=http://openconnect:2080
-> SET HTTP_PROXY=http://openconnect:2080
+> SET HTTPS_PROXY=http://openconnect:2080
 ```
 
 ### Utilities
