@@ -82,4 +82,22 @@ Vagrant.configure("2") do |config|
   config.vm.provision :shell do |s|
     s.path = "bin/provision.sh"
   end
+
+  # Public folder
+  #
+  # If you need to access additional resources over the VPN (for example, a Subversion repository), these items
+  # will go in the "public" folder adjacent to this file and accessible at /public when SSH'd into the box.
+  if vagrant_version >= "1.3.0"
+    config.vm.synced_folder "public/", "/public/", :owner => "vagrant", :mount_options => [ "dmode=755", "fmode=744" ]
+  else
+    config.vm.synced_folder "public/", "/public/", :owner => "vagrant", :extra => 'dmode=755,fmode=744'
+  end
+
+  # The Parallels Provider does not understand "dmode"/"fmode" in the "mount_options" as
+  # those are specific to Virtualbox. The folder is therefore overridden with one that
+  # uses corresponding Parallels mount options.
+  config.vm.provider :parallels do |v, override|
+    override.vm.synced_folder "public/", "/public/", :owner => "vagrant", :mount_options => []
+  end
+
 end
