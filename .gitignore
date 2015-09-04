@@ -1,3 +1,4 @@
 .vagrant
 vars/config.yml
 Customfile
+public
