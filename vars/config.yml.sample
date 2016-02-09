@@ -4,5 +4,5 @@ user: coolguy
 password: supersecure
 group: WEBDEV
 ovpn:
-  - directory: config
-    configuration: config.ovpn
+  directory: config
+  configuration: config.ovpn
