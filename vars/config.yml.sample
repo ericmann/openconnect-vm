@@ -5,4 +5,4 @@ password: supersecure
 group: WEBDEV
 ovpn:
   - directory: config
-  - configuration: config.ovpn
+    configuration: config.ovpn
