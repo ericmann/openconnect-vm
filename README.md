@@ -23,6 +23,22 @@ Under VirtualBox, the server will automatically start with a local IP of `192.16
 
 Under Hyper-V, you will need to identify the dynamically-provisioned IP address after boot, but can likely use the `openconnect` host alias during configuration.
 
+OpenVPN Client
+--------------
+
+The VM supports OpenVPN servers as an alternative option to AnyConnect. To switch to connecting to an OpenVPN server, you need to do the following:
+
+- Create a `config` directory in this repository (it will be ignored by git)
+- Move your .ovpn configuration file into that directory as well as any related files (keys, certs, etc.).
+- Modify the `ovpn` settings in `vars/config.yml`:
+  - Set `ovpn.directory` to the directory your configuration file is in, *relative to the repository root*. Omit leading and trailing slashes. This is the directory from which the `openvpn` client command will be run (using the `--cd` command line flag), so make sure all resources referenced in your .ovpn file are relative to this directory.
+  - Set `ovpn.configuration` to the name of the configuration file, relative to `ovpn.directory`.
+- Edit `provision/playbook.yml` and comment out the openconnect role (by placing a `#` at the beginning of the line) and un-comment the openvpn role (these are currently the last two lines of the file).
+- Run `vagrant destroy` if you already have an existing machine.
+- Run `vagrant up`.
+
+Assuming your ovpn config file is correct, you will now be able to use the SOCKS and HTTP proxies as outlined above and below.
+
 ### Browser Configuration
 
 Various browsers work a bit differently with SOCKS proxies.
