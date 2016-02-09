@@ -8,5 +8,5 @@
   roles:
     - socks
     - tinyproxy
-    - { role: openconnect, vpn_url: "{{ server }}", vpn_user: "{{ user }}", vpn_password: "{{ password }}", vpn_group: "{{ group }}" }
-#    - { role: openvpn, config_directory: "{{ ovpn.directory }}", vpn_config: "{{ ovpn.configuration }}" }
+    - { role: openconnect, vpn_url: "{{ server }}", vpn_user: "{{ user }}", vpn_password: "{{ password }}", vpn_group: "{{ group }}", tags: [ 'openconnect' ] }
+    - { role: openvpn, config_directory: "{{ ovpn.directory }}", vpn_config: "{{ ovpn.configuration }}", tags: [ 'openvpn' ] }
