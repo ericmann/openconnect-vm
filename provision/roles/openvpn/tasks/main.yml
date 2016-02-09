@@ -1,0 +1,13 @@
+---
+# tasks file for openvpn client
+
+- name: Install packages.
+  apt: update_cache=true name=openvpn
+
+- name: Configure VPN Connection
+  template: dest=/etc/init/openvpn.conf src=openvpn.conf.j2
+  notify:
+    - restart openvpn
+
+- name: Configure VPN cron restart
+  template: dest=/etc/cron.hourly/openvpn.sh src=openvpn.sh.j2 mode="u+rx"

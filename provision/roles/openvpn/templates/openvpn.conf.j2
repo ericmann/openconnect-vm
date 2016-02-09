@@ -1,0 +1,9 @@
+description "openvpn vpn client daemon"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+respawn
+respawn limit 5 120
+
+exec openvpn --config {{ vpn_config }}
