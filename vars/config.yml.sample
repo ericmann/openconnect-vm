@@ -3,3 +3,6 @@ server: https://example.com/vpn
 user: coolguy
 password: supersecure
 group: WEBDEV
+ovpn:
+  - directory: config
+  - configuration: config.ovpn
