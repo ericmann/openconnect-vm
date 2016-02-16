@@ -58,6 +58,8 @@ Vagrant.configure("2") do |config|
   # on your host machine inside the guest. See the manual for `ssh-add`.
   config.ssh.forward_agent = true
 
+  vpn_server = "openconnect"
+
   # Customfile - POSSIBLY UNSTABLE
   #
   # Use this to insert your own (and possibly rewrite) Vagrant config lines. Helpful
@@ -81,5 +83,6 @@ Vagrant.configure("2") do |config|
   # Actually, we're using shell provisioning to proxy to Ansible so things work reliably across operating systems.
   config.vm.provision :shell do |s|
     s.path = "bin/provision.sh"
+    s.args = vpn_server.to_s
   end
 end

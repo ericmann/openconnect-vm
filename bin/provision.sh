@@ -34,5 +34,20 @@ chmod 644 /vagrant/provision/hosts
 # More continuous scroll of the Ansible standard output buffer
 export PYTHONUNBUFFERED=1
 
+if [ $# -lt 1 ]; then
+    vpn="openconnect"
+else
+    vpn="$1"
+fi
+
+case $vpn in
+    openvpn)
+        skiptags="openconnect"
+	;;
+    *)
+        skiptags="openvpn"
+	;;
+esac
+
 # $ANS_BIN /vagrant/provision/playbook.yml -i /vagrant/provision/hosts
-$ANS_BIN /vagrant/provision/playbook.yml -i'127.0.0.1,'
+$ANS_BIN /vagrant/provision/playbook.yml -i'127.0.0.1,' --skip-tags "$skiptags"
