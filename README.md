@@ -165,7 +165,7 @@ Frequently Asked Questions
 
 ### My password was changed for the VPN, how do I let the VM know?
 
-Just update the values in `/vars/config.yml` and re-run `vagrant up`. This will both update machine and reset any configuration values necessary.
+Just update the values in `/vars/config.yml` and run `vagrant provision`. This will both update machine and reset any configuration values necessary.
 
 Credits
 -------
