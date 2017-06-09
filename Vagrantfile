@@ -47,7 +47,7 @@ Vagrant.configure("2") do |config|
   end
 
   # Default Ubuntu Box
-  config.vm.box = "ericmann/trusty64"
+  config.vm.box = "ubuntu/xenial64"
 
   # Default Hostname
   config.vm.hostname = "openconnect"
